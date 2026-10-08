@@ -1,42 +1,36 @@
-# Eldervale — Prologue Design v0.1
+# Shining Force: The Ancient Seal — Prologue Design
 
-## Design pillars
-- Fast onboarding. Sword discovery must happen within 10–15 minutes.
-- Strong bond with the adoptive father and friendly island creatures, established in short interactions instead of a long tutorial.
-- Classical turn-based tactical battles inspired by Shining Force II.
-- Mystery through environmental details; do not explain primordial beings, hero markings, or Lemon's history early.
-- Not all monsters are evil; many are allies, wildlife or neutral beings.
+## Non-negotiable story rules
+- The player's first 10–15 minutes lead to the storm-washed sword. Do not expand this into a lengthy peaceful prologue.
+- The hero is a human swordsman, around 20–22, with wild dark-brown hair, sage/turquoise handmade shoulder cape and subtle enigmatic blue markings.
+- His adoptive father is a genuinely affectionate nonhuman elder, knowledgeable but never omniscient, a traitor, or a secret villain.
+- The sword's link to Lemon must **not** be disclosed in the prologue.
+- Ancient creatures are not automatically hostile; the island is wistful and beautiful, not grimdark.
+- Keep the origins of the hero's marks and the island's three historical layers open.
 
-## Sequence (approximate)
-| Time | Gameplay beat |
-| --- | --- |
-| 0–4 min | Home in sea-cliff ruins; a playful monster wakes the protagonist; brief conversation with his adoptive father. |
-| 4–8 min | Brief movement/combat teaching encounter with a familiar monster friend; dragons fly strangely toward the north. |
-| 8–11 min | Sudden storm; abbreviated nighttime scene. |
-| 11–15 min | Coastal search; discover a battered sword; vision of warrior, fire, dark portal, weakening seal. |
-| 15–28 min | Battle 1: unknown creatures emerge from a long-sealed coastal ruin. Escape toward the forest with monster companion Barok. |
-| 28–35 min | Father examines sword and recognizes the long-sealed ruins' gate, but does not identify Lemon. |
-| 35–45 min | Start investigating the silent gate and unusual island disturbances. |
+## 45-minute chapter timing (design target, not yet implemented)
 
-## Battle 1 — The Gate That Should Not Open
-- Allies: protagonist (sword fighter), Barok (armored beast companion).
-- Initial hostiles: five unfamiliar ruins creatures, visually distinct from ordinary wildlife.
-- Objective: reach the exit to the forest. Killing all enemies is **not** required.
-- Teach tiles, turns, attack ranges, obstacles and escape objective.
-- Mid-battle: at least one hostile tries to reach the sword instead of simply attacking.
-- At escape: biggest creature pauses by the ancient gate, touches the earth; faint lines glow and the stone gate closes.
+| Minutes | Sequence | Player interaction | Native work needed |
+| --- | --- | --- | --- |
+| 00–04 | Wake in the sea-cliff sanctuary; elder checks on the hero | Walk, talk, inspect a lantern | Custom map / father sprite / event |
+| 04–08 | Friendly creature Barok offers a quick practice | Movement and one short practice encounter (not first full battle) | Brief field interaction |
+| 08–11 | Dragons fly against the wind; sudden storm | Walk to overlooking ruins | Storm events / sound / weather tiles |
+| 11–15 | Tide leaves an ancient scarred sword on the beach | Inspect blade, receive vision, acquire quest flag | Shore map / item / cutscene |
+| 15–28 | Ruins intruders emerge; fight with Barok | First tactical battle; escape through forest exit | New battle definition and exit check |
+| 28–35 | Return to father; he studies but cannot name the sword | Character dialogue; no exposition dump | Return warp / dialogue / flags |
+| 35–45 | Discover the first silent gate marker | Explore forest approach; gate reacts to blade | Forest and gate maps / event flags |
 
-## Story constraints
-- Lemon's identity as previous owner of the sword remains hidden at first.
-- Father's love for his adopted son is genuine, never merely a prophecy obligation.
-- Hero's mysterious marks are noticeable but their origin remains undecided.
-- Deep creatures may be peaceful, neutral or hostile; age does not mean evil.
-- The first unknown creatures' origin remains open: different epochs, ancient guardians or dimensional visitors.
-- Never treat speculative connections to established Shining Force lore as established canon.
+## Tactical encounter 1 — The Ruins Stir
+- Allies: hero and Barok. Monster companion is an ally, not a hostile tutorial target.
+- Enemies: five anomalous intruders from sealed ruins; no friendly island wildlife as enemies.
+- Win condition: reach designated forest escape tile. Eliminating all hostiles should not be mandatory.
+- Mechanics taught: positioning, movement cost, terrain defense, attack range and a movement-based objective.
+- One hostile diverts toward the sword location, giving clues without exposition.
+- Exit event: a large figure touches the stone; faint lines flare; an ancient gate falls silent.
 
-## Implementation tasks (not yet coded)
-- Locate overworld maps and cutscene/event script entry points.
-- Identify existing battle map and escape-condition mechanisms.
-- Define hero/Barok enemy classes and starting stats.
-- Prototype dialogue, storm scene, sword acquisition and first battle.
-- Validate build and emulator playthrough before marking any feature complete.
+## Local testing gates
+1. Native ROM assembles after every ASM edit.
+2. Verify emulator boot, audio, scrolling intro, title navigation, name entry and saving.
+3. Confirm map transitions and event flags persist correctly.
+4. Verify battle win / loss / egress / reload paths and a timed 45-minute playtest.
+5. Never mark any gameplay milestone complete based on design text alone.
