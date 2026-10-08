@@ -311,3 +311,7 @@ disasm/code/gameflow/special/battletest-expanded.asm
 # CHAPTER_SCREEN
 !**/chapterscreen/*.bin
 !**/chapterscreen/*.png
+# Local original game ROM files
+/*.md
+/rom/*.md
+/rom/*.bin
