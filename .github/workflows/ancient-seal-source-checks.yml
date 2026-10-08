@@ -1,0 +1,21 @@
+name: Ancient Seal native source checks
+
+on:
+  push:
+    branches:
+      - feature/ancient-seal-prologue
+  pull_request:
+    paths:
+      - 'disasm/data/scripting/introtext-standard.asm'
+      - 'disasm/sf2patches.asm'
+      - 'eldervale/verify-intro-source.ps1'
+      - '.github/workflows/ancient-seal-source-checks.yml'
+
+jobs:
+  verify-intro:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check Genesis intro text without original ROM data
+        shell: pwsh
+        run: ./eldervale/verify-intro-source.ps1
