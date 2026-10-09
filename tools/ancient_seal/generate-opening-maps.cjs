@@ -106,8 +106,8 @@ function map(name) {
     for(let y=6;y<=18;y++)for(let x=1;x<=36;x++)put(x,y,y>=14?'water':'sand',y>=15);
     for(let x=1;x<=36;x++)put(x,6,'cliff',true);
     for(let y=9;y<=11;y++)for(let x=0;x<=36;x++)put(x,y,'sand');
-    for(const [x,y] of [[7,8],[11,12],[17,7],[28,12],[31,8]])put(x,y,'pillar',true);
-    for(const [x,y] of [[5,13],[9,13],[14,13],[26,13],[32,13]])put(x,y,'flowers');
+    for(const [x,y] of [[7,8],[11,12],[17,7],[28,12],[31,8]])put(x,y,'beachpillar',true);
+    for(const [x,y] of [[5,13],[9,13],[14,13],[26,13],[32,13]])put(x,y,'beachflowers');
     for(const [x,y,t] of [[7,7,'rib0'],[8,8,'rib1'],[13,12,'rib2'],[18,7,'rib0'],[25,12,'rib1'],[31,7,'rib0']])put(x,y,t,true);
     for(let x=1;x<=36;x++)put(x,14,'coast');
     put(22,10,'sword',true);

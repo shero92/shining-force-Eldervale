@@ -78,7 +78,7 @@ storm crossing, then flags 913/914 after the vision and the return to Sanctuary.
 
 Emulator testing found and fixed three integration defects: opaque foreground
 water hid the map; the STANDARD ally sprite table still selected Bowie; native
-warp/zone tile flags were missing. A transparent block 17 now occupies the
+warp/zone tile flags were missing. A dedicated transparent block now occupies the
 foreground region. Warp blocks carry $1000 and story-zone blocks $1400.
 The encoder now preserves all six native layout flag bits.
 
@@ -132,3 +132,32 @@ python tools/ancient_seal/verify-sprite-68000.py --assembler /path/to/vasmm68k_m
 No full-game ROM or SRAM result follows from this isolated test. No timed
 chapter acceptance has occurred. The next gameplay milestone remains the
 Sealed Ruins encounter with Barok, five intruders and escape victory.
+
+
+## Reference-led graphics revision — 2026-10-09
+
+The user's reference attachments were recovered and inspected locally. The
+16-bit gameplay panels guide the ROM; the larger paintings guide colour and
+mood. This is an initial visual revision, not a claim of reference-quality art.
+
+- Replaced flat 14-block terrain with 39 authored object/terrain blocks plus
+  an empty foreground block, across three native 128-tile banks. Added a
+  continuous sanctuary facade, 48px trees, cliff shading, coastal banks,
+  beach bones, planting and sand-backed shore objects.
+- Redrew Hero and Father in all three native facings, with two walk frames.
+  Standard builds use a turquoise UI/mapsprite colour in the formerly green
+  cloth slot; text, transparency and other UI palette entries are preserved.
+- Fresh native-engine asset review exercised sanctuary, father interaction,
+  both onward warps, and the sword approach. All six sprite streams also passed
+  the actual 68000 decompressor test. Windows CI assembly/source checks passed
+  for the character redraw revision a1792b68.
+- Latest CI artifact download to this workspace returned HTTP 403. Visual
+  review therefore inserted the current asset streams into a previously
+  verified native engine in unused ROM space. This checks native rendering
+  and integration, but does **not** verify the exact latest CI binary.
+
+Remaining: reference-quality composition/detail, title, original portraits,
+Barok/battle art and effects. Existing native-save and chapter-length limits
+above still apply. Regenerate character source with
+`node tools/ancient_seal/generate-character-art.cjs`, then run the existing
+sprite exporter with stdout redirected to its generated ASM file.

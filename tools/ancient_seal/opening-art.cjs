@@ -3,8 +3,9 @@
 // Large objects are cut into 24px map blocks, then native 8px tiles.
 const EXTRA = [...Array.from({length:12},(_,i)=>'temple'+i),
   ...Array.from({length:4},(_,i)=>'oak'+i), 'rib0','rib1','rib2',
-  'coast','bank','grass2','grass3'];
+  'coast','bank','grass2','grass3','beachpillar','beachflowers'];
 function art(type) {
+  if(type==='beachpillar'||type==='beachflowers')return art(type==='beachpillar'?'pillar':'flowers').map(row=>row.map(c=>c===2||c===3?7:c));
   const p=Array.from({length:24},()=>Array(24).fill(2));
   const dot=(x,y,c)=>{if(x>=0&&y>=0&&x<24&&y<24)p[y][x]=c;};
   const rect=(x,y,w,h,c)=>{for(let j=y;j<y+h;j++)for(let i=x;i<x+w;i++)dot(i,j,c);};

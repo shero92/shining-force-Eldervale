@@ -38,6 +38,8 @@ jobs:
       - name: Validate original map-sprite codec and generated Genesis ASM
         shell: pwsh
         run: |
+          node tools/ancient_seal/generate-character-art.cjs --check
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           node tools/ancient_seal/export-map-sprites.cjs --self-test
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           node tools/ancient_seal/export-map-sprites.cjs --check
