@@ -17,6 +17,9 @@ pt_MapPalettes: dc.l MapPalette00
                 dc.l MapPalette13
                 dc.l MapPalette14
                 dc.l MapPalette15
+            if (STANDARD_BUILD=1)
+                dc.l AncientSeal_OpeningPalette
+            endif
 MapPalette00:   incbin "data/graphics/maps/mappalettes/mappalette00.bin"
 MapPalette01:   incbin "data/graphics/maps/mappalettes/mappalette01.bin"
 MapPalette02:   incbin "data/graphics/maps/mappalettes/mappalette02.bin"

@@ -132,15 +132,23 @@ MapSetups:      msMap 3, ms_map3
                 msMapEnd
                 msMap 42, ms_map42
                 msMapEnd
+            if (STANDARD_BUILD=1)
+                msMap MAP_ANCIENT_SEAL_SANCTUARY, AncientSeal_Sanctuary_Setup
+            else
                 msMap 43, ms_map43
                 msFlag 612, ms_map43_flag612 ; set after event at Hawel's house
+            endif
                 msMapEnd
                 msMap 44, ms_map44
                 msFlag 609, ms_map44_flag609 ; set after the scene where Astral exorcises the Gizmo
                 msFlag 506, ms_map44_flag506 ; Battle 6 completed
                 msFlag 507, ms_map44_flag507 ; Battle 7 completed
                 msMapEnd
+            if (STANDARD_BUILD=1)
+                msMap MAP_ANCIENT_SEAL_STORMWATCH, AncientSeal_Stormwatch_Setup
+            else
                 msMap 45, ms_map45
+            endif
                 msMapEnd
                 msMap 46, ms_map46
                 msMapEnd

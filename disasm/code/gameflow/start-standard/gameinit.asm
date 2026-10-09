@@ -102,8 +102,10 @@ InitializeGame:
             if (SCROLLING_TEXT_INTRODUCTION=1)
                 bsr.w   PlayTextIntro   ; TEXT INTRO CALL
             endif
+            if (SCROLLING_TEXT_INTRODUCTION=0)
                 clr.w   d0
                 jsr     PlayIntroOrEndCutscene
+            endif
                 clr.l   ((AFTER_INTRO_JUMP_POINTER-$1000000)).w
 @AfterGameIntro:
                 

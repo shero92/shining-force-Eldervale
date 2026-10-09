@@ -2,7 +2,7 @@
 
 Unofficial, non-commercial Shining Force II fan sequel under development in the original Motorola 68000 Sega Genesis disassembly. Not affiliated with Sega or endorsed by rightsholders.
 
-> **Current native status:** The scrolling introductory text is integrated into the actual disassembly; an assembled ROM was reported successful locally on 2026-10-09, but emulator gameplay acceptance testing has not yet been reported. The custom opening maps, sprites, dialogue events and tactical battles are **not implemented yet**.
+> **Current native status:** Original Tidewatch Sanctuary and Stormwatch map data, New Game routing, father dialogue/services, two-way warps and a once-only storm dialogue event are wired into STANDARD_BUILD source. Data decoders and source checks pass; these changes have **not been assembled or emulator-tested**. See [NATIVE_PROGRESS.md](NATIVE_PROGRESS.md) for the exact resume state.
 
 ## Narrative foundation
 
@@ -16,17 +16,18 @@ The island's history has three **unresolved, distinct layers**: primordial being
 
 ## Prologue scope
 
-Target: a genuine 45-minute opening in the native Sega Genesis game. The sword must appear by minute 10–15; the first true tactical battle follows immediately and involves strange intruders from sealed ruins, not the island's peaceful creatures.
+Target: a genuine hour-long opening in the native Sega Genesis game. The sword must appear by minute 10–15; the first true tactical battle follows immediately and involves strange intruders from sealed ruins, not the island's peaceful creatures.
 
 - [x] Native build path documented
 - [x] Scrolling intro replaced in native ASM
 - [x] First locally assembled native ROM reported successful (emulator test still pending)
 - [ ] Custom title art and Genesis-format assets
 - [ ] Hero and father mapsprites, portraits and animations
-- [ ] Home / shore / forest / gate maps and warps
+- [x] Sanctuary / Stormwatch map data and source warps (runtime untested)
+- [ ] Shore / forest / gate maps and warps
 - [ ] Sword pickup, vision and event flags
 - [ ] Native battle 1, Barok ally, escape victory, and battle exit cutscene
-- [ ] Full ~45-minute emulator playtest
+- [ ] Full timed hour-long emulator playtest
 
 ## Repository conventions
 

@@ -8,6 +8,11 @@ on:
     paths:
       - 'disasm/data/scripting/introtext-standard.asm'
       - 'disasm/sf2patches.asm'
+      - 'disasm/sf2enums.asm'
+      - 'disasm/code/**'
+      - 'disasm/data/maps/**'
+      - 'disasm/data/graphics/maps/**'
+      - 'disasm/data/scripting/flags.txt'
       - 'eldervale/verify-intro-source.ps1'
       - 'disasm/data/graphics/ancientseal/**'
       - 'tools/ancient_seal/**'
@@ -18,6 +23,13 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
       - name: Check Genesis intro text without original ROM data
         shell: pwsh
         run: ./eldervale/verify-intro-source.ps1
@@ -25,4 +37,17 @@ jobs:
         shell: pwsh
         run: |
           node tools/ancient_seal/export-map-sprites.cjs --self-test
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           node tools/ancient_seal/export-map-sprites.cjs --check
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Validate original opening maps, dialogue and native source wiring
+        shell: pwsh
+        run: |
+          node tools/ancient_seal/generate-opening-maps.cjs --check
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node tools/ancient_seal/generate-opening-dialogue.cjs --check
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node tools/ancient_seal/verify-opening-source.cjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node tools/ancient_seal/verify-opening-maps.cjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

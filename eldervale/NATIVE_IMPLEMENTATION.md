@@ -1,6 +1,6 @@
 # The Ancient Seal — Native Genesis Implementation Contract
 
-**Scope:** first fully playable 45-minute chapter in SF2DISASM's original Motorola 68000 engine. This is a technical implementation plan, **not** a statement of completed gameplay.
+**Scope:** first fully playable hour-long chapter in SF2DISASM's original Motorola 68000 engine. This is a technical implementation plan, **not** a statement of completed gameplay.
 
 ## Source anchors already verified
 | Purpose | Native source path | Required edit |
@@ -14,7 +14,7 @@
 | Map contents and events | `disasm/data/maps/entries/` | Wire actual map, event, NPC and warp data |
 | Audio | `disasm/data/sound/musicbank0/`, `musicbank1/`, `sfxbank/` | Preserve existing engine interface; plan original tracks |
 
-## Native progression flags (symbolic names until mapped to actual free SF2 flags)
+## Native progression flags (saved flags 912..917)
 - `ANCIENT_SEAL_WAKE_COMPLETE`: sanctuary wake interaction completed.
 - `ANCIENT_SEAL_STORM_SEEN`: dragons and storm cutscene witnessed.
 - `ANCIENT_SEAL_SWORD_FOUND`: item and vision obtained together.
@@ -22,9 +22,9 @@
 - `ANCIENT_SEAL_FATHER_BRIEFED`: loving father's post-battle conversation.
 - `ANCIENT_SEAL_GATE_REACHED`: silent gate reaction, end of chapter.
 
-**Do not add these as raw ASM constants until a free flag range is verified.** Confirm all loads, saves, resumes and egress logic against real engine behavior.
+Flags 912..917 were audited against the catalog and native flag uses, then mapped in `sf2enums.asm`. They are outside temporary flags 256..383. Confirm loads, saves, resumes and egress in an emulator; source inspection is not SRAM proof.
 
-## Map specifications (new art required, not implemented)
+## Map specifications (see NATIVE_PROGRESS.md for exact source/runtime status)
 ### A: Tidewatch Sanctuary — 00–08 min
 - Cliffside home carved into pale ruins, amber lanterns, open sky, warm, lived-in details.
 - NPC: adoptive father, two nonhostile creatures; Barok waits outdoors.
@@ -69,7 +69,7 @@
 5. Implement each area in dependency order: sanctuary -> ridge -> shore -> battle -> return -> gate.
 6. Implement sprite sheets/portraits and tile data in Genesis-safe palette/tile formats.
 7. Integrate item, flags and victory script; check resume, lose, egress and save.
-8. Full timed test; target 45 minutes without filler.
+8. Full timed test; target one hour without filler.
 
 ## ROM acceptance checklist
 - [ ] ROM boots and audio plays on a Genesis emulator.
@@ -78,6 +78,6 @@
 - [ ] Save + reload return to correct scene.
 - [ ] No unknown character identity leaks.
 - [ ] First battle can be escaped and cannot softlock.
-- [ ] Chapter can be completed in ~45 minutes on a fresh save.
+- [ ] Chapter can be completed in one hour on a fresh save, established by actual timed play.
 
 **Copyright:** Never upload base `sf2.bin`, unmodified ROM data chunks extracted by the split tool, compiled game ROMs, or other original copyrighted assets to GitHub. The original game's graphics/music may only be used locally consistent with ownership and applicable rights.

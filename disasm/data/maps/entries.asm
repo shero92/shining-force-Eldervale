@@ -44,9 +44,17 @@ pt_MapData:     dc.l Map00
                 dc.l Map40
                 dc.l Map41
                 dc.l Map42
+            if (STANDARD_BUILD=1)
+                dc.l AncientSeal_Sanctuary_Map
+            else
                 dc.l Map43
+            endif
                 dc.l Map44
+            if (STANDARD_BUILD=1)
+                dc.l AncientSeal_Stormwatch_Map
+            else
                 dc.l Map45
+            endif
                 dc.l Map46
                 dc.l Map47
                 dc.l Map48
@@ -1686,3 +1694,7 @@ Map78s8_OtherItems:include "data\maps\entries\map78\8-other-items.asm"    ;
 Map78s0_Blocks: incbin "data/maps/entries/map78/0-blocks.bin"
 Map78s1_Layout: incbin "data/maps/entries/map78/1-layout.bin"
 Map78s9_Animations:include "data\maps\entries\map78\9-animations.asm"    ; 
+
+            if (STANDARD_BUILD=1)
+                include "data/maps/ancientseal/opening.asm"
+            endif

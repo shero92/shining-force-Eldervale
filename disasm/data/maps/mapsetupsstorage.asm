@@ -718,3 +718,7 @@
                 include "data\maps\entries\map21\mapsetups\s4_descriptions_543.asm"    ; 
                 include "data\maps\entries\map21\mapsetups\s5_itemevents_543.asm"    ; 
                 include "data\maps\entries\map21\mapsetups\s6_initfunction_543.asm"    ; 
+
+            if (STANDARD_BUILD=1)
+                include "data/maps/ancientseal/setups.asm"
+            endif

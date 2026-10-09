@@ -15,6 +15,18 @@ DisplayText:
                 bsr.w   CreateDialogueWindow
                 move.w  (sp)+,d0
                 move.b  #1,((CURRENTLY_TYPEWRITING-$1000000)).w ; "Currently typewriting"
+            if (STANDARD_BUILD=1)
+                cmpi.w  #ANCIENT_SEAL_TEXT_FIRST,d0
+                bcs.s   @OriginalTextBank
+                cmpi.w  #ANCIENT_SEAL_TEXT_END,d0
+                bcc.s   @OriginalTextBank
+                subi.w  #ANCIENT_SEAL_TEXT_FIRST,d0
+                lsl.w   #2,d0
+                lea     (AncientSeal_OpeningTextPointers).l,a0
+                movea.l (a0,d0.w),a0
+                bra.w   @StringReady
+@OriginalTextBank:
+            endif
                 movem.w d0,-(sp)        ; save string #
                 lsr.w   #6,d0
                 andi.b  #$FC,d0         ; string # -> bank pointer offset
@@ -33,6 +45,7 @@ DisplayText:
                 
                 dbf     d0,@GotoNextString_Loop ; loop until wanted string reached
                 
+@StringReady:
                 clr.l   ((CURRENT_DIALOGUE_ASCII_BYTE_ADDRESS-$1000000)).w 
                                                         ; get ready
                 clr.b   ((DIALOGUE_REGULAR_TILE_TOGGLE-$1000000)).w
@@ -123,7 +136,18 @@ GetNextTextSymbol:
                 bne.w   @Continue
                 
                 movea.l ((COMPRESSED_STRING_POINTER-$1000000)).w,a0
+            if (STANDARD_BUILD=1)
+                cmpa.l  #AncientSeal_OpeningTextStart,a0
+                bcs.s   @CompressedText
+                cmpa.l  #AncientSeal_OpeningTextEnd,a0
+                bcc.s   @CompressedText
+                clr.w   d0
+                move.b  (a0)+,d0
+                bra.s   @TextDecoded
+@CompressedText:
+            endif
                 jsr     j_HuffmanDecode
+@TextDecoded:
                 move.l  a0,((COMPRESSED_STRING_POINTER-$1000000)).w
                 rts
 @Continue:
