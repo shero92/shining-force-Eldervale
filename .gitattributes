@@ -20,3 +20,7 @@
 *.PDF	 diff=astextplain
 *.rtf	 diff=astextplain
 *.RTF	 diff=astextplain
+
+# Generated assembly is compared byte-for-byte on Windows and Linux.
+*.asm text eol=lf
+*.bin binary
