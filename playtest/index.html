@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shining Force — ROM Playtest</title>
+<style>
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#101523;color:#eef2ff}
+body{max-width:1100px;margin:32px auto;padding:0 18px}
+header{margin-bottom:24px}h1{margin-bottom:6px}p{color:#b8c5df;line-height:1.5}
+section{background:#1a2337;border:1px solid #354565;border-radius:12px;padding:18px;margin:16px 0}
+input{max-width:100%}button{cursor:pointer;background:#618bfa;color:#fff;border:0;border-radius:7px;padding:12px 20px;font-weight:bold;margin:12px 0}
+button:disabled{opacity:.5;cursor:not-allowed}#game{width:100%;height: min(70vh,680px);min-height:380px;background:#070a11;border-radius:8px}
+#status{white-space:pre-wrap}code{color:#c5d7ff}
+</style>
+</head>
+<body>
+<header><h1>⚔️ Shining Force — Browser Playtest</h1>
+<p>Play a legally obtained Sega Genesis / Mega Drive ROM locally in your browser. No game ROM is bundled or uploaded to a server by this page.</p></header>
+<section>
+<label for="rom">Choose your <code>.bin</code>, <code>.md</code> or <code>.gen</code> ROM:</label>
+<input id="rom" type="file" accept=".bin,.md,.gen,.rom,application/octet-stream">
+<br><button id="start" disabled>Start playtest</button>
+<p id="status" role="status">Select a ROM file to begin.</p>
+</section>
+<section id="player" hidden><div id="game"></div></section>
+<section>
+<h2>How to test</h2>
+<p>Open this page through GitHub Pages or another HTTPS web host, choose your own ROM, and press Start. The emulator may load additional code from the EmulatorJS CDN; an internet connection is required for the first load. Keyboard/gamepad mappings are available in the emulator's settings.</p>
+<p>This is a playtest launcher, not a modified game build. For gameplay changes, edit and rebuild the disassembly using the tools provided by this repository, then select the rebuilt ROM here.</p>
+</section>
+<script>
+(() => {
+  const input = document.querySelector('#rom');
+  const button = document.querySelector('#start');
+  const status = document.querySelector('#status');
+  const player = document.querySelector('#player');
+  let url = null;
+  input.addEventListener('change', () => {
+    const file = input.files && input.files[0];
+    button.disabled = !file;
+    status.textContent = file ? 'Ready: ' + file.name + ' (' + Math.round(file.size / 1024) + ' KiB)' : 'Select a ROM file to begin.';
+  });
+  button.addEventListener('click', () => {
+    const file = input.files && input.files[0];
+    if (!file) return;
+    button.disabled = true;
+    if (url) URL.revokeObjectURL(url);
+    url = URL.createObjectURL(file);
+    window.EJS_player = '#game';
+    window.EJS_core = 'segaMD';
+    window.EJS_gameName = file.name;
+    window.EJS_gameUrl = url;
+    window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
+    player.hidden = false;
+    status.textContent = 'Loading emulator… If it remains blank, check your connection or browser console.';
+    const script = document.createElement('script');
+    script.src = window.EJS_pathtodata + 'loader.js';
+    script.onerror = () => { status.textContent = 'Could not load EmulatorJS. Check internet access or content blockers, then reload the page.'; button.disabled = false; };
+    document.body.appendChild(script);
+  }, {once:true});
+})();
+</script>
+</body></html>
