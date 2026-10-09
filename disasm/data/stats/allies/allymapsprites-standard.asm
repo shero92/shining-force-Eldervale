@@ -10,8 +10,8 @@ table_AllyMapsprites:
 ; Syntax        mapsprite [MAPSPRITE_]enum (or index)
                 
 ; 0: Bowie
-                mapsprite BOWIE_BASE
-                mapsprite BOWIE_PROMO
+                mapsprite ANCIENT_SEAL_HERO_BASE
+                mapsprite ANCIENT_SEAL_HERO_PROMO
                 mapsprite DEFAULT
                 
 ; 1: Sarah

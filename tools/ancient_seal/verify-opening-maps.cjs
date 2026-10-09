@@ -9,6 +9,7 @@ try {
  fs.writeFileSync(path.join(dir,'tiles.bin'),g.stackEncode(raw));fs.writeFileSync(path.join(dir,'tiles-expected.bin'),raw);
  const pal=Buffer.alloc(32);g.PALETTE.forEach((v,i)=>pal.writeUInt16BE(v,i*2));fs.writeFileSync(path.join(dir,'palette.bin'),pal);
  const blocks=g.TYPES.map((_,b)=>Array.from({length:9},(_,i)=>256+b*9+i));
+ blocks.push(Array(9).fill(0x17e));
  fs.writeFileSync(path.join(dir,'blocks.bin'),g.blockEncode(blocks));
  const blockWords=Buffer.alloc(blocks.length*18);blocks.flat().forEach((v,i)=>blockWords.writeUInt16BE(v,i*2));fs.writeFileSync(path.join(dir,'blocks-expected.bin'),blockWords);
  for(const n of ['Sanctuary','Stormwatch','BoneTide']) {
