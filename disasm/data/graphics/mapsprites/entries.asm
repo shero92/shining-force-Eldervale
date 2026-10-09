@@ -712,15 +712,15 @@ pt_Mapsprites:  dc.l Mapsprite000_0
                 dc.l Mapsprite236_0
                 dc.l Mapsprite236_1
                 dc.l Mapsprite236_2
-                dc.l AncientSeal_Hero_MapSprite
-                dc.l AncientSeal_Hero_MapSprite
-                dc.l AncientSeal_Hero_MapSprite
-                dc.l AncientSeal_Hero_MapSprite
-                dc.l AncientSeal_Hero_MapSprite
-                dc.l AncientSeal_Hero_MapSprite
-                dc.l AncientSeal_Elder_MapSprite
-                dc.l AncientSeal_Elder_MapSprite
-                dc.l AncientSeal_Elder_MapSprite
+                dc.l AncientSeal_Hero_Up_MapSprite
+                dc.l AncientSeal_Hero_Side_MapSprite
+                dc.l AncientSeal_Hero_Down_MapSprite
+                dc.l AncientSeal_Hero_Up_MapSprite
+                dc.l AncientSeal_Hero_Side_MapSprite
+                dc.l AncientSeal_Hero_Down_MapSprite
+                dc.l AncientSeal_Elder_Up_MapSprite
+                dc.l AncientSeal_Elder_Side_MapSprite
+                dc.l AncientSeal_Elder_Down_MapSprite
 Mapsprite000_0: incbin "data/graphics/mapsprites/mapsprite000-0.bin"
 Mapsprite000_1: incbin "data/graphics/mapsprites/mapsprite000-1.bin"
 Mapsprite000_2: incbin "data/graphics/mapsprites/mapsprite000-2.bin"

@@ -15,6 +15,8 @@ on:
       - 'disasm/data/scripting/flags.txt'
       - 'eldervale/verify-intro-source.ps1'
       - 'disasm/data/graphics/ancientseal/**'
+      - 'disasm/data/graphics/mapsprites/entries.asm'
+      - 'disasm/data/graphics/icons/entries-standard.asm'
       - 'tools/ancient_seal/**'
       - '.github/workflows/ancient-seal-source-checks.yml'
 
@@ -39,6 +41,10 @@ jobs:
           node tools/ancient_seal/export-map-sprites.cjs --self-test
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           node tools/ancient_seal/export-map-sprites.cjs --check
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node tools/ancient_seal/verify-character-sprites.cjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node tools/ancient_seal/generate-sword-icon.cjs --check
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Validate original opening maps, dialogue and native source wiring
         shell: pwsh

@@ -132,7 +132,7 @@ ItemIcon125:    incbin "data/graphics/icons/item/icon125.bin"
 ItemIcon126:    incbin "data/graphics/icons/item/icon126.bin"
 
             if (STANDARD_BUILD&EXPANDED_ITEMS_AND_SPELLS=1)
-ItemIcon127:    incbin "data/graphics/icons/item/icon127.bin"
+ItemIcon127:    include "data/graphics/ancientseal/sword-icon.asm"
 ItemIcon128:    incbin "data/graphics/icons/item/icon127.bin"
 ItemIcon129:    incbin "data/graphics/icons/item/icon127.bin"
 ItemIcon130:    incbin "data/graphics/icons/item/icon127.bin"

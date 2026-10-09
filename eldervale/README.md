@@ -2,7 +2,7 @@
 
 Unofficial, non-commercial Shining Force II fan sequel under development in the original Motorola 68000 Sega Genesis disassembly. Not affiliated with Sega or endorsed by rightsholders.
 
-> **Current native status:** Original Tidewatch Sanctuary and Stormwatch map data, New Game routing, father dialogue/services, two-way warps and a once-only storm dialogue event are wired into STANDARD_BUILD source. Data decoders and source checks pass; these changes have **not been assembled or emulator-tested**. See [NATIVE_PROGRESS.md](NATIVE_PROGRESS.md) for the exact resume state.
+> **Current native status:** Sanctuary, Stormwatch and Bone-Tide Shore, sword pickup/vision, original Hero/Father directions and two-frame gait, and an original sword icon are wired into native source. Source/data checks and isolated 68000 sprite decompression pass. The current game has **not been assembled or playtested**; Sealed Ruins combat remains unfinished. See [NATIVE_PROGRESS.md](NATIVE_PROGRESS.md).
 
 ## Narrative foundation
 
@@ -20,12 +20,13 @@ Target: a genuine hour-long opening in the native Sega Genesis game. The sword m
 
 - [x] Native build path documented
 - [x] Scrolling intro replaced in native ASM
-- [x] First locally assembled native ROM reported successful (emulator test still pending)
+- [ ] Current complete native ROM assembled and boot-tested
 - [ ] Custom title art and Genesis-format assets
 - [ ] Hero and father mapsprites, portraits and animations
 - [x] Sanctuary / Stormwatch map data and source warps (runtime untested)
-- [ ] Shore / forest / gate maps and warps
-- [ ] Sword pickup, vision and event flags
+- [x] Bone-Tide Shore map and return warp in native source (runtime untested)
+- [ ] Forest / gate maps and warps
+- [x] Sword pickup, vision and event flags in native source (runtime untested)
 - [ ] Native battle 1, Barok ally, escape victory, and battle exit cutscene
 - [ ] Full timed hour-long emulator playtest
 

@@ -9,10 +9,15 @@ This folder documents the **actual Shining Force II Motorola 68000 disassembly p
 - Original Sanctuary / Stormwatch / Bone-Tide Shore tiles, blocks, collision,
   father dialogue, source warps, storm event, sword pickup and once-only vision
   are integrated. Sealed Ruins remains a closed boundary pending its battle.
-- Hero/Father sprites are static prototypes; palette and walk-cycle work remains.
+- Hero/Father have three authored facings and two walk frames per facing,
+  mapped to the shared native UI palette. Art remains preliminary.
+- Item 127 has an original fixed-size 192-byte raw inventory icon.
 - The original title and local soundtrack resources remain placeholders.
-- No local `rom/sf2.bin` is present. This revision has NOT been assembled or
-  tested on an emulator. An earlier local build report does not validate it.
+- A supplied lawful base ROM is now present locally. Full assembly still
+  fails at the Wine/toolchain prerequisite in this execution environment.
+- Native 68000 sprite decompression passes in an isolated Genesis Plus GX
+  test. The FULL GAME has NOT been assembled, booted or played. An earlier
+  build report or isolated decoder test does not validate the current game.
 
 See [NATIVE_PROGRESS.md](NATIVE_PROGRESS.md) for resumption and validation details.
 
@@ -46,8 +51,9 @@ Music banks reside in `disasm/data/sound/musicbank0/`, `musicbank1/` and `sfxban
 
 **Target:** one fully playable hour in the original engine, without filler.
 **Current reality:** the first three areas are integrated in source and their
-native compressed data passes independent decoder tests; no runtime or timed
-acceptance has been completed.
+native compressed data passes independent decoder tests; the character streams also pass an
+isolated actual-68000 decoder test. Full-game runtime and timed acceptance
+have not been completed.
 
 ## Repeatable validation
 - On a Windows computer, run `powershell -ExecutionPolicy Bypass -File .\eldervale\verify-intro-source.ps1` from the repository root to check the native intro's text width, title and enabled patch (no ROM needed).
