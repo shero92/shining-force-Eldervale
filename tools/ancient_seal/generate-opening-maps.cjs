@@ -34,7 +34,10 @@ function blockEncode(blocks) {
   for(const block of blocks) for(const tile of block) { b.str('1110001'); b.put(tile-0x100,9); }
   return b.buffer();
 }
-function flags(b, word) { const f=word>>>14; b.str(['00','100','101','01'][f]); }
+function flags(b, word) {
+  if(word&0x3c00) { b.str('11'); b.put(word>>>10,6); }
+  else b.str(['00','100','101','01'][word>>>14]);
+}
 function layoutEncode(words) {
   assert.equal(words.length,4096);
   const b=new Bits(), histories=Array.from({length:2048},()=>[]); let cursor=2;
@@ -126,6 +129,17 @@ function map(name) {
     put(22,10,'sword',true);
     put(36,10,'arch',true);
   }
+  // Native movement calls warp/zone handlers only on marked event blocks.
+  const mark=(x,y,event)=>a[y*64+x]=(a[y*64+x]&0xC3ff)|event;
+  if(name==='Sanctuary')mark(31,15,0x1000);
+  if(name==='Stormwatch') {
+    mark(0,10,0x1000);mark(39,10,0x1000);
+    for(let y=8;y<=12;y++)if(!(a[y*64+15]&0xc000))mark(15,y,0x1400);
+  }
+  if(name==='BoneTide') {
+    mark(0,10,0x1000);
+    for(const x of [3,35])for(let y=7;y<=14;y++)if(!(a[y*64+x]&0xc000))mark(x,y,0x1400);
+  }
   return a;
 }
 function asm(label,data) {
@@ -150,6 +164,8 @@ function reachable(a,from,to,occupied=[]) {
 }
 function checkRoutes() {
   const a=map('Sanctuary'),b=map('Stormwatch'),c=map('BoneTide');
+  for(const [m,x,y] of [[a,31,15],[b,0,10],[b,39,10],[c,0,10]])assert.equal(m[y*64+x]&0x3c00,0x1000,'Warp block needs native event flag');
+  for(const [m,x,y] of [[b,15,10],[c,3,10],[c,35,10]])assert.equal(m[y*64+x]&0x3c00,0x1400,'Zone block needs native event flag');
   assert(reachable(a,[12,14],[12,11],[[12,10]]),'Father must be reachable');
   assert(reachable(a,[12,14],[31,15],[[12,10]]),'Exit must be reachable');
   assert(reachable(b,[2,10],[0,10]),'Return warp must be reachable');
