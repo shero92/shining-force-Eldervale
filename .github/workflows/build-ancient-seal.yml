@@ -1,0 +1,37 @@
+name: Build Ancient Seal ROM
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - build/standard
+    paths:
+      - 'disasm/**'
+      - 'build/**'
+      - 'split/**'
+      - 'tools/**'
+      - '.github/workflows/build-ancient-seal.yml'
+jobs:
+  assemble:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out ROM source
+        uses: actions/checkout@v4
+      - name: Assemble modified Sega Genesis ROM
+        shell: cmd
+        run: call build\build-ancient-seal.bat
+      - name: Confirm ROM exists
+        shell: pwsh
+        run: |
+          $rom = 'build/ancient-seal-playtest.bin'
+          if (!(Test-Path $rom)) { throw "Missing build output: $rom" }
+          $size = (Get-Item $rom).Length
+          if ($size -lt 2097152 -or $size -gt 4194304) { throw "Unexpected ROM size: $size" }
+          Write-Host "ROM built: $rom ($size bytes)"
+      - name: Archive build output
+        uses: actions/upload-artifact@v4
+        with:
+          name: ancient-seal-playtest-rom
+          path: build/ancient-seal-playtest.bin
+          if-no-files-found: error
