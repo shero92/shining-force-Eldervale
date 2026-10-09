@@ -21,7 +21,7 @@ AllyStats00:
 ; Note: Constant names ("enums"), shorthands (defined by macro), and numerical indexes are interchangeable.
                 
                 forClass  SDMN
-                hpGrowth  12, 58, LINEAR
+                hpGrowth  14, 62, LINEAR
                 mpGrowth  8, 16, EARLY
                 attGrowth 6, 40, LINEAR
                 defGrowth 4, 36, LINEAR
