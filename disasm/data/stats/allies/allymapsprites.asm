@@ -5,7 +5,7 @@ table_AllyMapsprites:
                 
 ; Syntax        mapsprite [MAPSPRITE_]enum (or index)
                 
-                mapsprite BOWIE_PROMO   ; 0: BOWIE
+                mapsprite ANCIENT_SEAL_HERO_PROMO   ; 0: BOWIE
                 mapsprite SARAH_SPECIAL ; 1: SARAH
                 mapsprite CHESTER_SPECIAL ; 2: CHESTER
                 mapsprite JAHA_SPECIAL  ; 3: JAHA

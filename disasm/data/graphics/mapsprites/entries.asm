@@ -712,15 +712,15 @@ pt_Mapsprites:  dc.l Mapsprite000_0
                 dc.l Mapsprite236_0
                 dc.l Mapsprite236_1
                 dc.l Mapsprite236_2
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
-                dc.l Mapsprite237_0
+                dc.l AncientSeal_Hero_MapSprite
+                dc.l AncientSeal_Hero_MapSprite
+                dc.l AncientSeal_Hero_MapSprite
+                dc.l AncientSeal_Hero_MapSprite
+                dc.l AncientSeal_Hero_MapSprite
+                dc.l AncientSeal_Hero_MapSprite
+                dc.l AncientSeal_Elder_MapSprite
+                dc.l AncientSeal_Elder_MapSprite
+                dc.l AncientSeal_Elder_MapSprite
 Mapsprite000_0: incbin "data/graphics/mapsprites/mapsprite000-0.bin"
 Mapsprite000_1: incbin "data/graphics/mapsprites/mapsprite000-1.bin"
 Mapsprite000_2: incbin "data/graphics/mapsprites/mapsprite000-2.bin"
@@ -1390,4 +1390,5 @@ Mapsprite235_2: incbin "data/graphics/mapsprites/mapsprite235-2.bin"
 Mapsprite236_0: incbin "data/graphics/mapsprites/mapsprite236-0.bin"
 Mapsprite236_1: incbin "data/graphics/mapsprites/mapsprite236-1.bin"
 Mapsprite236_2: incbin "data/graphics/mapsprites/mapsprite236-2.bin"
-Mapsprite237_0: incbin "data/graphics/mapsprites/mapsprite237-0.bin"
+; Original Ancient Seal map-sprite streams in three unused slots (237-239).
+                include "data/graphics/ancientseal/mapsprites-basic.asm"
