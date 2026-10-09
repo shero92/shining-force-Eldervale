@@ -17,31 +17,52 @@ function art(type) {
     for(let i=0;i<3;i++){const x=noise(i,2,seed)%22,y=noise(i,8,seed)%22;line(x,y,x-1,y-2,1);dot(x+1,y-1,3);dot(x,y-2,3);}
   }
   function sand(){for(let y=0;y<24;y++)for(let x=0;x<24;x++)p[y][x]=noise(x,y)%31===0?8:7;for(let i=0;i<5;i++){const x=noise(i,7)%21,y=noise(i,2)%24;line(x,y,x+2,y,6);}}
-  function water(){for(let y=0;y<24;y++)for(let x=0;x<24;x++)p[y][x]=4;
-    for(const [x,y,w] of [[1,3,7],[13,10,8],[2,18,6],[17,23,7]]){line(x,y,x+w,y,10);line(x+2,y-1,x+w-2,y-1,13);}}
+  function water(){for(let y=0;y<24;y++)for(let x=0;x<24;x++)p[y][x]=(y<5||y>20)?4:10;
+    for(const [x,y,w] of [[1,3,7],[13,10,8],[2,18,6],[17,23,7]]){line(x,y,x+w,y,4);line(x+2,y-1,x+w-2,y-1,13);dot(x+1,y-2,6);}}
   if(type.startsWith('temple')) {
-    // A continuous 96x72 facade with copper-gold trims and turquoise domes.
+    // Continuous ivory sanctuary: arched galleries, inset masonry and two cupolas.
     const b=+type.slice(6), ox=b%4*24,oy=Math.floor(b/4)*24;
     for(let y=0;y<24;y++)for(let x=0;x<24;x++){
-      const X=x+ox,Y=y+oy; let c=2;
-      if(Y>=25&&X>=6&&X<=89){c=X>81?8:7;if(Y%9===0)c=8;else if((X+(Math.floor(Y/9)%2)*8)%16===0)c=6;}
-      // Twin cupolas, shaped rather than a repeated roof texture.
-      for(const cx of [20,75]){
-        if(Y>=4&&Y<=24&&(X-cx)**2/225+(Y-24)**2/400<=1)c=Y<9?13:(X<cx-4?10:(X<cx+5?4:9));
-        if(Y===24&&Math.abs(X-cx)<=15)c=11;
-        if(Y>=26&&Y<55&&Math.abs(X-cx)<=9)c=X>cx+5?8:6;
-        if(Y>=31&&Y<46&&Math.abs(X-cx)<=4)c=Math.abs(X-cx)===4?11:(X<cx?9:4);
-        if(Y===3&&Math.abs(X-cx)<=2)c=11;
+      const X=x+ox,Y=y+oy;let c=2;
+      // Terraced foundation and the shaded wall behind the colonnade.
+      if(X>=3&&X<=92&&Y>=28){c=7;
+        if(Y%7===0||(X+(Math.floor(Y/7)%2)*7)%14===0)c=8;
+        if(Y%7===1)c=6;
       }
-      if(Y>=17&&Y<=32&&X>=31&&X<=64)c=Y===17||Y===31?11:((X-31)%7===0?10:4);
-      if(Y>=37&&Y<=63&&X>=40&&X<=55){c=1;if(X===40||X===55||Y===37)c=11;}
-      if(Y>=36&&Y<62&&([32,34,61,63].includes(X)))c=X%2===0?6:8;
-      if(Y>=62&&X>=5&&X<=90)c=Y%3===0?6:8;
-      if(Y===60&&X>=5&&X<=90)c=11;
-      if((X<14||X>81)&&Y>=44&&Y<60&&noise(X,Y)%7<3)c=Y<51?3:2;
+      for(const cx of [19,76]){
+        const dx=X-cx;
+        if(Y>=5&&Y<=22&&dx*dx/196+(Y-22)**2/289<=1){
+          c=dx<-6?13:dx<3?10:dx<9?4:9;
+          if((dx+14)%6===0)c=dx<0?6:4;
+        }
+        if(Y>=22&&Y<=25&&Math.abs(dx)<=15)c=Y===23?11:6;
+        if(Y>=26&&Y<=48&&Math.abs(dx)<=11)c=dx>7?8:6;
+        if(Y>=29&&Y<=44&&Math.abs(dx)<=5&&(Y>=34||dx*dx+(Y-34)**2<26))c=dx<-2?4:9;
+        if(Y>=3&&Y<=5&&Math.abs(dx)<=1)c=11;
+      }
+      // Central pediment with a gold mosaic and stone bevels.
+      if(X>=32&&X<=63&&Y>=18&&Y<=30){c=Y===18||Y===30?6:7;
+        if(Y===20||Y===28)c=11;
+        if(Y>=22&&Y<=26)c=(X%5===0)?10:4;
+      }
+      // Recessed arches have a curved crown, thick pillars and dark interior.
+      for(const cx of [11,29,47,65,83]){
+        const dx=X-cx;
+        if(Y>=39&&Y<=62&&Math.abs(dx)<=6&&(Y>=45||dx*dx+(Y-45)**2<=36))c=1;
+        if(Y>=39&&Y<=62&&Math.abs(dx)<=8&&(Y>=45||dx*dx+(Y-45)**2<=64)&&!(Math.abs(dx)<=6&&(Y>=45||dx*dx+(Y-45)**2<=36)))c=dx<0?6:8;
+        if(Y>=46&&Y<=61&&(dx===-8||dx===7))c=6;
+        if(Y===61&&Math.abs(dx)<=9)c=6;
+        if(Y>=48&&Y<=59&&dx===-5)c=9;
+      }
+      if(Y>=63&&X>=2&&X<=93)c=Y%3===0?6:Y%3===1?7:8;
+      // Climbing vines stay in the wall margins, with deliberate leaf clusters.
+      for(const vx of [4,35,70,91])if(Y>=29&&Y<=61){const v=vx+Math.round(Math.sin(Y/4)*2);
+        if(Math.abs(X-v)<=1)c=1;
+        if((Y%5<3)&&Math.abs(X-v)<=3)c=X<v?3:2;
+        if(Y%13===0&&X===v-2)c=11;
+      }
       p[y][x]=c;
-    }
-    return p;
+    }return p;
   }
   if(type.startsWith('oak')) {
     const b=+type.slice(3),ox=b%2*24,oy=Math.floor(b/2)*24;
@@ -50,7 +71,7 @@ function art(type) {
       if((X-24)**2/330+(Y-41)**2/22<1)c=1;
       if(Y>19&&Y<46&&Math.abs(X-24-Math.floor((Y-20)/8))<4)c=X<25?8:9;
       if(Y>40&&Y<46&&Math.abs(X-24)<(Y-38))c=8;
-      for(const [cx,cy,rx,ry] of [[15,15,13,11],[30,16,15,12],[23,7,12,7],[9,24,8,6],[36,25,9,7]])if((X-cx)**2/rx**2+(Y-cy)**2/ry**2<1){const t=noise(X,Y)%13;c=Y>cy+3?1:2;if(Y<cy-2&&X<cx+3)c=3;if(Y===cy+3&&t<4)c=2;if(Y<cy&&t===0)c=2;}
+      for(const [cx,cy,rx,ry] of [[15,15,13,11],[30,16,15,12],[23,7,12,7],[9,24,8,6],[36,25,9,7]])if((X-cx)**2/rx**2+(Y-cy)**2/ry**2<1){const edge=(X-cx)**2/rx**2+(Y-cy)**2/ry**2;const cluster=(Math.floor(X/3)*7+Math.floor(Y/3)*11)%9;c=edge>.82||Y>cy+4?1:2;if(edge<.76&&Y<cy+1&&cluster<4)c=3;if(Y<cy-4&&X<cx&&cluster===0)c=6;}
       p[y][x]=c;
     }return p;
   }
