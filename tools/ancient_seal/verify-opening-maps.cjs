@@ -11,7 +11,7 @@ try {
  const blocks=g.TYPES.map((_,b)=>Array.from({length:9},(_,i)=>256+b*9+i));
  fs.writeFileSync(path.join(dir,'blocks.bin'),g.blockEncode(blocks));
  const blockWords=Buffer.alloc(blocks.length*18);blocks.flat().forEach((v,i)=>blockWords.writeUInt16BE(v,i*2));fs.writeFileSync(path.join(dir,'blocks-expected.bin'),blockWords);
- for(const n of ['Sanctuary','Stormwatch']) {
+ for(const n of ['Sanctuary','Stormwatch','BoneTide']) {
   fs.writeFileSync(path.join(dir,n+'.bin'),g.layoutEncode(g.map(n)));const b=Buffer.alloc(8192);g.map(n).forEach((v,i)=>b.writeUInt16BE(v,i*2));fs.writeFileSync(path.join(dir,n+'-expected.bin'),b);
  }
  const result=spawnSync('java',['-Djava.awt.headless=true','-cp',path.join(root,'disasm/data/maps/SF2MapCreator-1.2.1.jar'),path.join(__dirname,'VerifyOpeningMaps.java'),dir],{encoding:'utf8'});

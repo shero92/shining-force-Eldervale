@@ -26,7 +26,7 @@ class VerifyOpeningMaps {
    if(blocks[i].getTiles()[j].getId()!=tileId)throw new AssertionError("Block tile id mismatch "+i+","+j);
   }
   System.out.println("PASS: existing SF2 map block decoder reproduced "+(blocks.length-3)+" original blocks");
-  for(String n:new String[]{"Sanctuary","Stormwatch"}) {
+  for(String n:new String[]{"Sanctuary","Stormwatch","BoneTide"}) {
    var lm=new com.sfc.sf2.map.layout.io.DisassemblyManager();
    Method m=lm.getClass().getDeclaredMethod("parseLayoutData",MapBlock[].class,String.class);m.setAccessible(true);
    MapLayout layout=(MapLayout)m.invoke(lm,blocks,dir+"/"+n+".bin");

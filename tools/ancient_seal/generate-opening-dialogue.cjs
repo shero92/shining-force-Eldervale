@@ -9,7 +9,16 @@ const dialogue=[
  ['REPEAT','Welcome home, {LEADER}.{N}Let me tend your wounds{N}and keep our record.{W1}'],
  ['STORM','A dragon circles above.{N}The wind suddenly falls{N}silent.{W1}'],
  ['STORM_WARNING','Thunder rolls over the sea.{N}Something glints below{N}on Bone-Tide Shore.{W1}'],
- ['SHORE_PENDING','The cliff trail breaks here.{N}The terrace road leads{N}back home.{W1}']
+ ['SHORE_PENDING','The cliff trail breaks here.{N}The terrace road leads{N}back home.{W1}'],
+ ['SHORE_ARRIVAL','White ribs of old wrecks{N}rise through the tide.{N}The glint lies ahead.{W1}'],
+ ['SWORD_WAITING','A salt-blackened blade rests{N}between stone and surf.{N}Its edge is strangely cold.{W1}'],
+ ['VISION_FIRE','Fire folds around a lone{N}warrior beneath a red sky.{W1}'],
+ ['VISION_GATE','Behind him, a gate of stone{N}opens into endless dark.{W1}'],
+ ['VISION_SEAL','A voice without a face says:{N}THE SEAL WEAKENS.{W1}'],
+ ['VISION_HEIRS','SEEK THE HEIRS OF POWER.{N}TRUST NO CROWN.{W1}'],
+ ['VISION_END','The vision breaks. The blade{N}is cold and silent again.{W1}'],
+ ['SWORD_GONE','Only a pale cut remains{N}in the wet sand.{W1}'],
+ ['RUINS_PENDING','The sealed stones hum once,{N}then fall quiet. The way{N}ahead is not open yet.{W1}']
 ];
 function generate() {
  const s=fs.readFileSync(path.join(root,'disasm/data/scripting/text/asciitotextsymbolmap.asm'),'utf8');
@@ -29,5 +38,5 @@ function generate() {
  }
  return out+'AncientSeal_OpeningTextEnd:\n                align\n';
 }
-if(require.main===module) {const s=generate();if(process.argv.includes('--check'))assert.equal(fs.readFileSync(output,'utf8').replace(/\r\n/g,'\n'),s);else fs.writeFileSync(output,s);console.log('PASS: seven original dialogue entries; dynamic leader name and native controls');}
+if(require.main===module) {const s=generate();if(process.argv.includes('--check'))assert.equal(fs.readFileSync(output,'utf8').replace(/\r\n/g,'\n'),s);else fs.writeFileSync(output,s);console.log(`PASS: ${dialogue.length} original dialogue entries; dynamic leader name and native controls`);}
 module.exports={generate,dialogue};

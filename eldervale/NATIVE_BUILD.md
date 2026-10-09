@@ -6,8 +6,9 @@ This folder documents the **actual Shining Force II Motorola 68000 disassembly p
 ### Current source state
 - Scrolling Ancient Seal intro replaces the original intro cutscene in STANDARD_BUILD.
 - New Game retains hero naming and SRAM, and routes to original Sanctuary data.
-- Original Sanctuary / Stormwatch tiles, blocks, collision, father dialogue,
-  source warps and a saved once-only storm dialogue event are integrated.
+- Original Sanctuary / Stormwatch / Bone-Tide Shore tiles, blocks, collision,
+  father dialogue, source warps, storm event, sword pickup and once-only vision
+  are integrated. Sealed Ruins remains a closed boundary pending its battle.
 - Hero/Father sprites are static prototypes; palette and walk-cycle work remains.
 - The original title and local soundtrack resources remain placeholders.
 - No local `rom/sf2.bin` is present. This revision has NOT been assembled or
@@ -27,7 +28,7 @@ See [NATIVE_PROGRESS.md](NATIVE_PROGRESS.md) for resumption and validation detai
 `disasm/code/specialscreens/title/title.asm` loads its title-screen tiles/layout and uses the existing `MUSIC_TITLE` command. Replacing the actual logo requires new Genesis-compatible **4bpp tiles, palettes, tile layout and compression**. The title-screen layouts are in `disasm/data/graphics/specialscreens/titlescreen/titlescreenlayouts.asm`.
 
 Map IDs are enumerated in `disasm/data/maps/map_names.txt`. STANDARD_BUILD
-repurposes slots 43 and 45 through pointer overrides; vanilla definitions are
+repurposes slots 43, 45 and 50 through pointer overrides; vanilla definitions are
 retained. Original map data and setups live in `disasm/data/maps/ancientseal/`.
 Runtime boot, dialogue, movement, warps and SRAM still require a local build.
 
@@ -38,13 +39,13 @@ Music banks reside in `disasm/data/sound/musicbank0/`, `musicbank1/` and `sfxban
 1. Produce an **original Ancient Seal logo** in Genesis-safe tile/palette format, integrate into title resources, and verify VRAM sprite/layout limits.
 2. Verify the source-wired leader naming, sanctuary spawn, flags and SRAM in a local ROM.
 3. Verify/refine the original Sanctuary/Stormwatch maps and Father events; finish sprites and add Barok.
-4. Introduce storm cutscene, shore map, sword discovery and a new item.
-5. Build the first battle in the native tactical battle format and the return scene.
+4. Finish the storm presentation and original Tideworn Blade item icon.
+5. Build the Sealed Ruins battle in the native tactical format and the return scene.
 6. Build Silent Gate map, dialogue and next battle.
 7. Add original score and sound palette, final animation/art, save progression and playtest.
 
 **Target:** one fully playable hour in the original engine, without filler.
-**Current reality:** the first two areas are integrated in source and their
+**Current reality:** the first three areas are integrated in source and their
 native compressed data passes independent decoder tests; no runtime or timed
 acceptance has been completed.
 

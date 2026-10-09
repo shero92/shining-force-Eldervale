@@ -1936,7 +1936,21 @@ table_ItemDefinitions:
                              NONE, 0, &
                              NONE, 0
                 
-                ; 127: Empty
+                ; 127: Tideworn Blade (dormant story item; not yet equipable)
+            if (STANDARD_BUILD&EXPANDED_ITEMS_AND_SPELLS=1)
+                equipFlags   NONE
+                equipFlags2  NONE
+                range        0, 0
+                price        0
+                itemType     RARE|UNSELLABLE
+                useSpell     NOTHING
+                equipEffects NONE, 0, &
+                             NONE, 0, &
+                             NONE, 0, &
+                             NONE, 0, &
+                             NONE, 0, &
+                             NONE, 0
+            else
                 equipFlags   NONE
                 equipFlags2  NONE
                 range        0, 0
@@ -1949,6 +1963,7 @@ table_ItemDefinitions:
                              NONE, 0, &
                              NONE, 0, &
                              NONE, 0
+            endif
                 
             if (STANDARD_BUILD&EXPANDED_ITEMS_AND_SPELLS=1)
                 

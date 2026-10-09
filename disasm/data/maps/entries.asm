@@ -59,7 +59,11 @@ pt_MapData:     dc.l Map00
                 dc.l Map47
                 dc.l Map48
                 dc.l Map49
+            if (STANDARD_BUILD=1)
+                dc.l AncientSeal_BoneTide_Map
+            else
                 dc.l Map50
+            endif
                 dc.l Map51
                 dc.l Map52
                 dc.l Map53

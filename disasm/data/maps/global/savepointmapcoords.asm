@@ -19,6 +19,7 @@ table_SavepointMapCoordinates:
             if (STANDARD_BUILD=1)
                 savePointMapCoordinates MAP_ANCIENT_SEAL_SANCTUARY, 12, 14, UP
                 savePointMapCoordinates MAP_ANCIENT_SEAL_STORMWATCH, 2, 10, RIGHT
+                savePointMapCoordinates MAP_ANCIENT_SEAL_BONE_TIDE_SHORE, 2, 10, RIGHT
             else
                 savePointMapCoordinates MAP_HAWEL_HOUSE, 7, 5, DOWN
             endif

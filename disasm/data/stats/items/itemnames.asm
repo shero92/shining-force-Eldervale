@@ -129,7 +129,7 @@ table_ItemNames:itemName "Medical", 13, "Herb"
                 itemName "Cotton", 13, "Balloon"
                 itemName "Chirrup", 13, "Sandals"
             if (STANDARD_BUILD&EXPANDED_ITEMS_AND_SPELLS=1)
-                itemName "item127"
+                itemName "Tideworn", 13, "Blade"
                 itemName "item128"
                 itemName "item129"
                 itemName "item130"

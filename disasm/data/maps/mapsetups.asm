@@ -152,6 +152,10 @@ MapSetups:      msMap 3, ms_map3
                 msMapEnd
                 msMap 46, ms_map46
                 msMapEnd
+            if (STANDARD_BUILD=1)
+                msMap MAP_ANCIENT_SEAL_BONE_TIDE_SHORE, AncientSeal_BoneTide_Setup
+                msMapEnd
+            endif
                 msMap 51, ms_map51
                 msFlag 520, ms_map51_flag520 ; Battle 20 completed
                 msMapEnd
