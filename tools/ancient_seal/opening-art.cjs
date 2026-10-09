@@ -12,8 +12,8 @@ function art(type) {
   const ellipse=(x,y,rx,ry,c)=>{for(let j=Math.floor(y-ry);j<=y+ry;j++)for(let i=Math.floor(x-rx);i<=x+rx;i++)if((i-x)**2/(rx*rx)+(j-y)**2/(ry*ry)<=1)dot(i,j,c);};
   const noise=(x,y,s=0)=>{let n=Math.imul(x+19+s,374761393)^Math.imul(y+31,668265263);n=Math.imul(n^(n>>>13),1274126177);return(n^(n>>>16))>>>0;};
   function grass(seed=0) {
-    for(let y=0;y<24;y++)for(let x=0;x<24;x++)p[y][x]=noise(x,y,seed)%19===0?1:2;
-    for(let i=0;i<8;i++){const x=noise(i,2,seed)%22,y=noise(i,8,seed)%22;line(x,y,x-1,y-2,1);dot(x+1,y-1,3);dot(x,y-2,3);}
+    for(let y=0;y<24;y++)for(let x=0;x<24;x++)p[y][x]=noise(x,y,seed)%53===0?1:2;
+    for(let i=0;i<3;i++){const x=noise(i,2,seed)%22,y=noise(i,8,seed)%22;line(x,y,x-1,y-2,1);dot(x+1,y-1,3);dot(x,y-2,3);}
   }
   function sand(){for(let y=0;y<24;y++)for(let x=0;x<24;x++)p[y][x]=noise(x,y)%31===0?8:7;for(let i=0;i<5;i++){const x=noise(i,7)%21,y=noise(i,2)%24;line(x,y,x+2,y,6);}}
   function water(){for(let y=0;y<24;y++)for(let x=0;x<24;x++)p[y][x]=4;
@@ -49,7 +49,7 @@ function art(type) {
       if((X-24)**2/330+(Y-41)**2/22<1)c=1;
       if(Y>19&&Y<46&&Math.abs(X-24-Math.floor((Y-20)/8))<4)c=X<25?8:9;
       if(Y>40&&Y<46&&Math.abs(X-24)<(Y-38))c=8;
-      for(const [cx,cy,rx,ry] of [[15,15,13,11],[30,16,15,12],[23,7,12,7],[9,24,8,6],[36,25,9,7]])if((X-cx)**2/rx**2+(Y-cy)**2/ry**2<1){const t=noise(X,Y)%13;c=Y>cy+3?1:(t<3?3:(t<5?1:2));if(Y<cy-3&&t<6)c=3;}
+      for(const [cx,cy,rx,ry] of [[15,15,13,11],[30,16,15,12],[23,7,12,7],[9,24,8,6],[36,25,9,7]])if((X-cx)**2/rx**2+(Y-cy)**2/ry**2<1){const t=noise(X,Y)%13;c=Y>cy+3?1:2;if(Y<cy-2&&X<cx+3)c=3;if(Y===cy+3&&t<4)c=2;if(Y<cy&&t===0)c=2;}
       p[y][x]=c;
     }return p;
   }

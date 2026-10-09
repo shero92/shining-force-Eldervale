@@ -42,4 +42,11 @@ InitializeDisplay:
 
     ; End of function InitializeDisplay
 
-palette_Base:   incbin "data/graphics/tech/basepalette.bin" ; Palette for UI and mapsprites
+palette_Base:
+            if (STANDARD_BUILD=1)
+                ; Original UI colours with turquoise cloth replacing vivid green.
+                dc.w $0000,$0EEE,$0000,$0444,$0888,$0A84,$0C64,$048E
+                dc.w $0ACE,$084E,$022C,$04CE,$0048,$0024,$0260,$0820
+            else
+                incbin "data/graphics/tech/basepalette.bin"
+            endif

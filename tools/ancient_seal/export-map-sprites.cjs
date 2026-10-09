@@ -99,8 +99,8 @@ function render(name, facing, data) {
 // Native mapsprites always use palette 3, shared with text, menus and icons.
 // These are color-index mappings, not a replacement for the game's UI palette.
 const COLOR_MAP = {
-  Hero:  [0,3,8,12,13,12,14,5,14,7,3,6,6,2,11,1],
-  Elder: [0,2,1,4,13,12,14,5,14,7,11,12,6,6,14,8]
+  Hero:  Array.from({length:16},(_,i)=>i),
+  Elder: Array.from({length:16},(_,i)=>i)
 };
 
 function pixels(frame) {

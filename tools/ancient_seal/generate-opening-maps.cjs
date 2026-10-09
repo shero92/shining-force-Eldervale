@@ -5,7 +5,7 @@ const fs = require('node:fs'), path = require('node:path'), assert = require('no
 const ROOT = path.resolve(__dirname, '../..');
 const OUTPUT = path.join(ROOT, 'disasm/data/maps/ancientseal/opening-generated.asm');
 const {art,EXTRA}=require('./opening-art.cjs');
-const PALETTE = [0,0x220,0x462,0x684,0xA62,0xEC4,0xCEE,0xACC,0x688,0x244,0xCA4,0x4AE,0x04A,0xEC8,0x248,0xCEE];
+const PALETTE = [0,0x240,0x482,0x6C6,0xA62,0xEC4,0xCEE,0xACC,0x688,0x244,0xCA4,0x4AE,0x04A,0xEC8,0x248,0xCEE];
 const TILESET_COUNT=3, BLANK_TILE=0x100+TILESET_COUNT*128-1;
 class Bits {
   constructor() { this.bits = ''; }
@@ -71,19 +71,22 @@ function map(name) {
   const put=(x,y,t,solid=false)=>a[y*64+x]=(TYPES.indexOf(t)+3)|(solid?0xC000:0);
   // Hidden first row primes the block cursor without visible debug tiles.
   TYPES.forEach((t,x)=>put(x,0,t,true));
-  // Block 17 uses transparent tile 126 for the foreground at y=32.
+  // A dedicated empty block keeps the foreground transparent at y=32.
   a[TYPES.length] = 0xC000|(TYPES.length+3);
   a.fill(TYPES.length+3,32*64);
   if(name==='Sanctuary') {
     for(let y=2;y<23;y++)for(let x=2;x<31;x++)put(x,y,['grass','grass2','grass3'][(x*7+y*3)%3]);
-    for(let y=8;y<=16;y++)for(let x=9;x<=15;x++)put(x,y,'path');
-    for(let y=0;y<3;y++)for(let x=0;x<4;x++)put(10+x,5+y,'temple'+(y*4+x),true);
-    for(let y=14;y<=16;y++)for(let x=11;x<=31;x++)put(x,y,'path');
-    for(const [x,y] of [[4,4],[4,8],[24,4],[27,7],[23,20],[27,20],[5,17]])for(let j=0;j<2;j++)for(let i=0;i<2;i++)put(x+i,y+j,'oak'+(j*2+i),true);
+    for(let y=10;y<=16;y++)for(let x=11;x<=13;x++)put(x,y,'path');
+    for(let y=10;y<=11;y++)for(let x=9;x<=15;x++)put(x,y,'path');
+    for(let y=0;y<3;y++)for(let x=0;x<4;x++)put(10+x,7+y,'temple'+(y*4+x),true);
+    for(let y=14;y<=15;y++)for(let x=11;x<=31;x++)put(x,y,'path');
+    for(const [x,y] of [[4,4],[4,8],[24,4],[27,7],[23,20],[27,20],[5,17],[6,10],[17,10]])for(let j=0;j<2;j++)for(let i=0;i<2;i++)put(x+i,y+j,'oak'+(j*2+i),true);
     for(let x=2;x<30;x++)put(x,22,'bank',true);
     for(const [x,y] of [[5,5],[25,5],[26,8],[24,21],[6,18]])put(x,y,'shrub',true);
     for(const [x,y] of [[9,4],[15,4],[20,12],[20,18]])put(x,y,'pillar',true);
-    put(9,10,'lantern',true); put(15,10,'lantern',true);
+    put(9,12,'lantern',true); put(15,12,'lantern',true);
+    for(const [x,y] of [[8,14],[8,15],[9,15],[15,16],[16,16],[16,17],[15,18]])put(x,y,'flowers');
+    for(const [x,y] of [[7,15],[9,17],[17,16],[18,17],[20,16]])put(x,y,'shrub',true);
     for(let y=19;y<=20;y++)for(let x=4;x<=9;x++)put(x,y,'flowers');
     for(let y=2;y<23;y++)put(30,y,'cliff',true);
     for(let y=14;y<=16;y++)put(30,y,'path');
