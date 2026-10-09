@@ -315,3 +315,6 @@ disasm/code/gameflow/special/battletest-expanded.asm
 /*.md
 /rom/*.md
 /rom/*.bin
+
+# User-provided base ROM for reproducible native builds
+!/rom/sf2.bin

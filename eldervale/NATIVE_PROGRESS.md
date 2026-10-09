@@ -65,21 +65,21 @@ Goal: one hour of genuinely playable original Genesis content, without filler.
 
 **Not tested:** full-game ROM assembly/execution, emulator boot, input, church
 menus, SRAM round-trip, actual warps, sprite colors/facing/animation and timing.
-The supplied lawful US ROM is now available locally; lack of a base ROM is
-no longer the blocker. Full build remains blocked: the included 32-bit Wine
-loader cannot execute here (Exec format error), and wine64 initialization
-fails at wineserver socket creation (Operation not permitted). A native
-vasm assembler and Genesis Plus GX core can run the isolated decoder test,
-but do not yet provide a compatible full ASM68K/Z80 build pipeline.
+The user-provided `rom/sf2.bin` is present and 1748 resources were extracted.
+Local build is blocked by 32-bit Wine Exec format error and wineserver socket
+restrictions. Direct vasm assembly is incompatible with the ASM68K directives.
+A Windows GitHub Actions workflow now builds the sound banks and STANDARD_BUILD,
+verifies the ROM header/checksum, and uploads the preview and diagnostics.
+The user explicitly confirmed publication of the base ROM and build workflow
+on 2026-10-09. Git CLI has no write credentials; publication uses the connected
+GitHub API. No full preview has been assembled or emulator-tested yet.
 Do not turn source/data test success into a ROM/playability claim.
 
 ## Resume priorities
 1. Inspect this file and remote branch before editing; check for a supplied
-   lawful local ROM and build/emulator tools. Never commit a ROM or its splits.
-   IMPORTANT: the older local `game` checkout has a divergent ROM-import
-   commit `cb533c1d`; do not push that history. This round used a separate
-   worktree based on remote `f0de5c76` and pushes only original source/assets.
-   Always resume from the latest remote feature branch, not that stale head.
+   lawful local ROM and build/emulator tools. The user explicitly authorized
+   publishing the supplied base ROM. Do not commit extracted splits.
+   Preserve the latest remote directional-character and sword-icon changes.
 2. Build the new start route and test fresh naming, movement, father talk,
    repeat services, both warps, storm replay prevention, save/load and egress.
    Old original-SF2 saves are not compatible with repurposed map slots.
