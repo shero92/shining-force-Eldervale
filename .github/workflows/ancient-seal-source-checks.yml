@@ -9,6 +9,8 @@ on:
       - 'disasm/data/scripting/introtext-standard.asm'
       - 'disasm/sf2patches.asm'
       - 'eldervale/verify-intro-source.ps1'
+      - 'disasm/data/graphics/ancientseal/**'
+      - 'tools/ancient_seal/**'
       - '.github/workflows/ancient-seal-source-checks.yml'
 
 jobs:
@@ -19,3 +21,8 @@ jobs:
       - name: Check Genesis intro text without original ROM data
         shell: pwsh
         run: ./eldervale/verify-intro-source.ps1
+      - name: Validate original map-sprite codec and generated Genesis ASM
+        shell: pwsh
+        run: |
+          node tools/ancient_seal/export-map-sprites.cjs --self-test
+          node tools/ancient_seal/export-map-sprites.cjs --check
