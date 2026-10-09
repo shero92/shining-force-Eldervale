@@ -3,8 +3,8 @@
 AncientSeal_Sanctuary_Map:
                 mapPalette 16
                 mapTileset1 115
-                mapTileset2 255
-                mapTileset3 255
+                mapTileset2 116
+                mapTileset3 117
                 mapTileset4 255
                 mapTileset5 255
                 dc.l AncientSeal_OpeningBlocks, AncientSeal_Sanctuary_Layout
@@ -15,8 +15,8 @@ AncientSeal_Sanctuary_Map:
 AncientSeal_Stormwatch_Map:
                 mapPalette 16
                 mapTileset1 115
-                mapTileset2 255
-                mapTileset3 255
+                mapTileset2 116
+                mapTileset3 117
                 mapTileset4 255
                 mapTileset5 255
                 dc.l AncientSeal_OpeningBlocks, AncientSeal_Stormwatch_Layout
@@ -27,8 +27,8 @@ AncientSeal_Stormwatch_Map:
 AncientSeal_BoneTide_Map:
                 mapPalette 16
                 mapTileset1 115
-                mapTileset2 255
-                mapTileset3 255
+                mapTileset2 116
+                mapTileset3 117
                 mapTileset4 255
                 mapTileset5 255
                 dc.l AncientSeal_OpeningBlocks, AncientSeal_BoneTide_Layout

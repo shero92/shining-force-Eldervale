@@ -13,10 +13,10 @@ class VerifyOpeningMaps {
   Tile[] tiles=new StackGraphicsDecoder().decodeStackGraphics(Files.readAllBytes(Path.of(dir,"tiles.bin")),p);
   byte[] expected=Files.readAllBytes(Path.of(dir,"tiles-expected.bin")); int offset=0;
   for(Tile t:tiles)for(int y=0;y<8;y++)for(int x=0;x<8;x+=2) if((byte)((t.getPixels()[x][y]<<4)|t.getPixels()[x+1][y])!=expected[offset++])throw new AssertionError("Tile pixel mismatch at "+offset);
-  if(offset!=4096)throw new AssertionError("Expected 128 tiles: "+offset);
-  System.out.println("PASS: existing SF2 StackGraphicsDecoder reproduced all 4096 original tile bytes");
+  if(offset!=expected.length)throw new AssertionError("Tile count: "+offset);
+  System.out.println("PASS: existing SF2 StackGraphicsDecoder reproduced all original tile bytes");
   var bm=new com.sfc.sf2.map.block.io.DisassemblyManager();
-  String[] paths={dir+"/tiles.bin",dir+"/tiles.bin",dir+"/tiles.bin",dir+"/tiles.bin",dir+"/tiles.bin"};
+  String[] paths={dir+"/tiles0.bin",dir+"/tiles1.bin",dir+"/tiles2.bin",dir+"/tiles0.bin",dir+"/tiles0.bin"};
   MapBlock[] blocks=bm.importDisassembly(dir+"/palette.bin",paths,dir+"/blocks.bin");
   byte[] blockWords=Files.readAllBytes(Path.of(dir,"blocks-expected.bin"));
   if(blocks.length!=blockWords.length/18+3)throw new AssertionError("Block count "+blocks.length);

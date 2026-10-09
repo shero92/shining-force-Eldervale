@@ -4,7 +4,9 @@
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
 const ROOT = path.resolve(__dirname, '../..');
 const OUTPUT = path.join(ROOT, 'disasm/data/maps/ancientseal/opening-generated.asm');
-const PALETTE = [0,0x242,0x462,0x684,0xE82,0xEC4,0xEEE,0xCCA,0xA86,0x464,0x6AE,0x28E,0x04A,0x8CE,0x248,0xCEE];
+const {art,EXTRA}=require('./opening-art.cjs');
+const PALETTE = [0,0x220,0x462,0x684,0xA62,0xEC4,0xCEE,0xACC,0x688,0x244,0xCA4,0x4AE,0x04A,0xEC8,0x248,0xCEE];
+const TILESET_COUNT=3, BLANK_TILE=0x100+TILESET_COUNT*128-1;
 class Bits {
   constructor() { this.bits = ''; }
   put(v,n) { assert(n > 0 && v >= 0 && v < 2**n); this.bits += v.toString(2).padStart(n,'0'); }
@@ -54,38 +56,14 @@ function layoutEncode(words) {
   });
   return b.buffer();
 }
-const TYPES = ['grass','path','water','stone','roof','lantern','cliff','flowers','arch','tree','shrub','pillar','sand','sword'];
-function pixels(type) {
-  return Array.from({length:24},(_,y)=>Array.from({length:24},(_,x)=>{
-    const noise=(x*13+y*7)%29;
-    switch(type) {
-      case 'grass': return noise<2?3:(noise<5?1:2);
-      case 'path': return y%8===0||x%12===0?8:(noise<3?6:7);
-      case 'water': return (y+Math.floor(x/5))%7===0?13:((x+y)%11===0?5:4);
-      case 'stone': return x%12===0||y%8===0?8:((x+y)%17===0?7:6);
-      case 'roof': return y%6===0?9:((x+y)%6===0?2:1);
-      case 'lantern': return x>=8&&x<=15&&y>=5&&y<=15?(x===8||x===15?8:11):(x===12&&y>15?8:2);
-      case 'cliff': return y<4?7:(x%7===0?8:9);
-      case 'flowers': return (x%9===4&&y%9===4)?11:(noise<3?3:2);
-      case 'tree': { const crown=((x-12)**2/100+(y-9)**2/64)<1; return crown?(noise<4?3:(x<11?1:2)):(x>=10&&x<=13&&y>=12?8:2); }
-      case 'shrub': return (x-12)**2+(y-14)**2<64?(noise<3?11:(noise<8?3:1)):2;
-      case 'pillar': return x>=7&&x<=16?(y<4||y>19?7:(x<10?6:7)):2;
-      case 'arch': return y<5||(x<5||x>18)?(x%4===0?7:6):(y>20?7:4);
-      case 'sand': return noise<2?8:(noise<7?7:6);
-      case 'sword': {
-        const blade=Math.abs(x-(19-y))<=1&&y>=3&&y<=18;
-        const guard=y>=16&&y<=18&&x>=1&&x<=10;
-        const hilt=Math.abs(x-(19-y))<=2&&y>=18&&y<=22;
-        return blade?14:(guard||hilt?8:6);
-      }
-    }
-  }));
-}
+const TYPES = ['grass','path','water','stone','roof','lantern','cliff','flowers','arch','tree','shrub','pillar','sand','sword',...EXTRA];
+const pixels=art;
 function tileBytes(images) {
   const out=[];
   for(const p of images) for(let ty=0;ty<3;ty++)for(let tx=0;tx<3;tx++)
     for(let y=0;y<8;y++)for(let x=0;x<8;x+=2)out.push((p[ty*8+y][tx*8+x]<<4)|p[ty*8+y][tx*8+x+1]);
-  while(out.length<4096)out.push(0); // 128 tiles per native tileset
+  assert(out.length < TILESET_COUNT*4096);
+  while(out.length<TILESET_COUNT*4096)out.push(0); // Separate 128-tile native banks
   return Buffer.from(out);
 }
 function map(name) {
@@ -94,16 +72,15 @@ function map(name) {
   // Hidden first row primes the block cursor without visible debug tiles.
   TYPES.forEach((t,x)=>put(x,0,t,true));
   // Block 17 uses transparent tile 126 for the foreground at y=32.
-  a[TYPES.length] = 0xC011;
-  a.fill(17,32*64);
+  a[TYPES.length] = 0xC000|(TYPES.length+3);
+  a.fill(TYPES.length+3,32*64);
   if(name==='Sanctuary') {
-    for(let y=2;y<23;y++)for(let x=2;x<31;x++)put(x,y,'grass');
-    for(let y=6;y<=13;y++)for(let x=7;x<=17;x++)put(x,y,'path');
-    for(let x=7;x<=17;x++) { put(x,6,'stone',true); put(x,7,'roof',true); }
-    for(let y=8;y<=13;y++) { put(7,y,'stone',true); put(17,y,'stone',true); }
-    for(let x=7;x<=17;x++) if(x!==12)put(x,13,'stone',true);
+    for(let y=2;y<23;y++)for(let x=2;x<31;x++)put(x,y,['grass','grass2','grass3'][(x*7+y*3)%3]);
+    for(let y=8;y<=16;y++)for(let x=9;x<=15;x++)put(x,y,'path');
+    for(let y=0;y<3;y++)for(let x=0;x<4;x++)put(10+x,5+y,'temple'+(y*4+x),true);
     for(let y=14;y<=16;y++)for(let x=11;x<=31;x++)put(x,y,'path');
-    for(const [x,y] of [[4,4],[4,8],[24,4],[27,7],[23,20],[27,20],[5,17]])put(x,y,'tree',true);
+    for(const [x,y] of [[4,4],[4,8],[24,4],[27,7],[23,20],[27,20],[5,17]])for(let j=0;j<2;j++)for(let i=0;i<2;i++)put(x+i,y+j,'oak'+(j*2+i),true);
+    for(let x=2;x<30;x++)put(x,22,'bank',true);
     for(const [x,y] of [[5,5],[25,5],[26,8],[24,21],[6,18]])put(x,y,'shrub',true);
     for(const [x,y] of [[9,4],[15,4],[20,12],[20,18]])put(x,y,'pillar',true);
     put(9,10,'lantern',true); put(15,10,'lantern',true);
@@ -116,6 +93,8 @@ function map(name) {
     for(let y=9;y<=11;y++)for(let x=1;x<=38;x++)put(x,y,'path');
     for(let x=1;x<=38;x++) { put(x,7,'cliff',true); put(x,13,'cliff',true); }
     for(let x=22;x<=27;x++)put(x,8,'flowers');
+    for(const x of [3,10,25,34])for(let j=0;j<2;j++)for(let i=0;i<2;i++)put(x+i,4+j,'oak'+(j*2+i),true);
+    for(let x=1;x<=38;x++)put(x,14,'bank',true);
     for(const [x,y] of [[6,8],[6,12],[18,8],[18,12],[32,8],[32,12]])put(x,y,'pillar',true);
     for(const [x,y] of [[23,12],[27,12]])put(x,y,'shrub',true);
     put(0,10,'path'); put(38,10,'path'); put(39,10,'path');
@@ -126,6 +105,8 @@ function map(name) {
     for(let y=9;y<=11;y++)for(let x=0;x<=36;x++)put(x,y,'sand');
     for(const [x,y] of [[7,8],[11,12],[17,7],[28,12],[31,8]])put(x,y,'pillar',true);
     for(const [x,y] of [[5,13],[9,13],[14,13],[26,13],[32,13]])put(x,y,'flowers');
+    for(const [x,y,t] of [[7,7,'rib0'],[8,8,'rib1'],[13,12,'rib2'],[18,7,'rib0'],[25,12,'rib1'],[31,7,'rib0']])put(x,y,t,true);
+    for(let x=1;x<=36;x++)put(x,14,'coast');
     put(22,10,'sword',true);
     put(36,10,'arch',true);
   }
@@ -149,10 +130,10 @@ function asm(label,data) {
 }
 function build() {
   const blocks=TYPES.map((_,b)=>Array.from({length:9},(_,i)=>0x100+b*9+i));
-  blocks.push(Array(9).fill(0x17e));
+  blocks.push(Array(9).fill(BLANK_TILE));
   const pal=Buffer.alloc(32); PALETTE.forEach((c,i)=>pal.writeUInt16BE(c,i*2));
   return '; ORIGINAL AUTHOR-DEFINED DATA. Generated by generate-opening-maps.cjs.\n; Native SF2 stack tiles, block bitstream and 64x64 layout bitstreams.\n'+
-    asm('AncientSeal_OpeningPalette',pal)+asm('AncientSeal_OpeningTiles',stackEncode(tileBytes(TYPES.map(pixels))))+
+    asm('AncientSeal_OpeningPalette',pal)+Array.from({length:TILESET_COUNT},(_,i)=>asm('AncientSeal_OpeningTiles'+(i?i+1:''),stackEncode(tileBytes(TYPES.map(pixels)).subarray(i*4096,(i+1)*4096)))).join('')+
     asm('AncientSeal_OpeningBlocks',blockEncode(blocks))+
     ['Sanctuary','Stormwatch','BoneTide'].map(n=>asm('AncientSeal_'+n+'_Layout',layoutEncode(map(n)))).join('');
 }
@@ -181,4 +162,4 @@ if(require.main===module) {
   if(process.argv.includes('--check')) { assert.equal(fs.readFileSync(OUTPUT,'utf8').replace(/\r\n/g,'\n'),s,'Generated maps are stale'); console.log('PASS: deterministic original opening map data current'); }
   else fs.writeFileSync(OUTPUT,s);
 }
-module.exports={map,build,pixels,tileBytes,stackEncode,blockEncode,layoutEncode,PALETTE,TYPES,reachable};
+module.exports={map,build,pixels,tileBytes,stackEncode,blockEncode,layoutEncode,PALETTE,TYPES,reachable,BLANK_TILE,TILESET_COUNT};

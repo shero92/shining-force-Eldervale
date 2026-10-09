@@ -118,6 +118,8 @@ pt_MapTilesets: dc.l MapTileset000
                 dc.l MapTileset114
             if (STANDARD_BUILD=1)
                 dc.l AncientSeal_OpeningTiles
+                dc.l AncientSeal_OpeningTiles2
+                dc.l AncientSeal_OpeningTiles3
             endif
 MapTileset000:  incbin "data/graphics/maps/maptilesets/maptileset000.bin"
 MapTileset001:  incbin "data/graphics/maps/maptilesets/maptileset001.bin"

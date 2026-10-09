@@ -6,10 +6,11 @@ const g=require('./generate-opening-maps.cjs'),root=path.resolve(__dirname,'../.
 const dir=fs.mkdtempSync(path.join(os.tmpdir(),'ancient-seal-maps-'));
 try {
  const raw=g.tileBytes(g.TYPES.map(g.pixels));
- fs.writeFileSync(path.join(dir,'tiles.bin'),g.stackEncode(raw));fs.writeFileSync(path.join(dir,'tiles-expected.bin'),raw);
+ fs.writeFileSync(path.join(dir,'tiles.bin'),g.stackEncode(raw));
+ for(let i=0;i<g.TILESET_COUNT;i++)fs.writeFileSync(path.join(dir,'tiles'+i+'.bin'),g.stackEncode(raw.subarray(i*4096,(i+1)*4096))); fs.writeFileSync(path.join(dir,'tiles-expected.bin'),raw);
  const pal=Buffer.alloc(32);g.PALETTE.forEach((v,i)=>pal.writeUInt16BE(v,i*2));fs.writeFileSync(path.join(dir,'palette.bin'),pal);
  const blocks=g.TYPES.map((_,b)=>Array.from({length:9},(_,i)=>256+b*9+i));
- blocks.push(Array(9).fill(0x17e));
+ blocks.push(Array(9).fill(g.BLANK_TILE));
  fs.writeFileSync(path.join(dir,'blocks.bin'),g.blockEncode(blocks));
  const blockWords=Buffer.alloc(blocks.length*18);blocks.flat().forEach((v,i)=>blockWords.writeUInt16BE(v,i*2));fs.writeFileSync(path.join(dir,'blocks-expected.bin'),blockWords);
  for(const n of ['Sanctuary','Stormwatch','BoneTide']) {
